@@ -10,3 +10,6 @@ Object.defineProperty(paramObject, i, {
 })
 return paramObject;
 }
+
+
+export {useParams}
