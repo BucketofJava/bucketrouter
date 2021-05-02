@@ -11,7 +11,7 @@ Object.defineProperty(paramObject, i, {
 return paramObject;
 }
 function useTags(){
-    
+    const tagObject={}
 }
 
 export {useParams}
