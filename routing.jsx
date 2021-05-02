@@ -10,6 +10,8 @@ Object.defineProperty(paramObject, i, {
 })
 return paramObject;
 }
-
+function useTags(){
+    
+}
 
 export {useParams}
