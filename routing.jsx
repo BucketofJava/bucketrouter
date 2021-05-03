@@ -1,4 +1,5 @@
 import React from 'react';
+
 function useParams(){
 const paramObject={};
 const searchParams=new URLSearchParams(window.location.search);
@@ -22,8 +23,25 @@ for(var anchor in anchorObj){
 }
 return scrollRef;
 }*/
-function useId(){
-    
-}
+function useId(ref){
+for(var route in ref.current.routingObj){
+    if(validifyRoute(route) in validifyRoute(window.location.href)){
 
-export {useParams}
+    }
+}
+}
+function validifyRoute(r, robj=null){
+    
+    route=r;
+    if(robj != null && typeof robj[r]=="object"){
+        route=validifyRoute(route + robj)        
+    }
+if(!route.endswith("/")){
+    route=route+"/";
+}
+function getPage(route, routeObj){
+if(window.location.host in route){}
+}
+return route;}
+
+export {useParams, useParams, validifyRoute}
