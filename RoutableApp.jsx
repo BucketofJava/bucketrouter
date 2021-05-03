@@ -3,7 +3,7 @@ const RoutableApp= props => {
 const [mainApp, setMainApp] = useState(null);
 function checkRoute(){
     for(var route in props.routingObj){
-    if(route in window.location.pathname){
+    if(window.location.pathname==route || window.location.pathname==route+"/"){
         return props.routingObj[route];
     }
     }
@@ -11,7 +11,7 @@ function checkRoute(){
 }
 useEffect(() => {
 setMainApp(checkRoute());
-}, [props])
+}, [props, window.location.href])
     return (
         <main>
             {mainApp}

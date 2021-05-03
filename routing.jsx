@@ -10,8 +10,12 @@ Object.defineProperty(paramObject, i, {
 })
 return paramObject;
 }
-function useTags(){
-    const tagObject={}
+function useAnchors(anchorObj){
+for(var anchor in anchorObj){
+    if(window.location.hash==anchor){
+        
+    }
+}
 }
 
 export {useParams}
