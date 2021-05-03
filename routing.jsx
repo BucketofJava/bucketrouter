@@ -10,12 +10,20 @@ Object.defineProperty(paramObject, i, {
 })
 return paramObject;
 }
-function useAnchors(anchorObj){
+/*function useAnchors(anchorObj){
+const scrollRef=useRef();
 for(var anchor in anchorObj){
     if(window.location.hash==anchor){
-        
+        scrollRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        })
     }
 }
+return scrollRef;
+}*/
+function useId(){
+    
 }
 
 export {useParams}
