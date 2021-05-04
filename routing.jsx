@@ -1,5 +1,20 @@
 import React from 'react';
 
+
+
+
+
+function getParams(route){
+    const paramObject={};
+    const searchParams=new URLSearchParams(window.location.search);
+    searchParams.forEach((p, i) => {
+    Object.defineProperty(paramObject, i, {
+        value: p,
+        writable:false
+    })
+    })
+    return paramObject;
+}
 function useParams(){
 const paramObject={};
 const searchParams=new URLSearchParams(window.location.search);
@@ -39,9 +54,20 @@ function validifyRoute(r, robj=null){
 if(!route.endswith("/")){
     route=route+"/";
 }
+
+
+
+
+//new system
+function getPathArrayFromRoute(route){
+    var routeArray=route.split("/")
+
+}
+
+
 function getPage(route, routeObj){
 if(window.location.host in route){}
 }
 return route;}
 
-export {useParams, useParams, validifyRoute}
+export {useParams, validifyRoute}
