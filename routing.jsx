@@ -6,7 +6,7 @@ import React from 'react';
 
 function getParams(route){
     const paramObject={};
-    const searchParams=new URLSearchParams(window.location.search);
+    const searchParams=new URLSearchParams(route);
     searchParams.forEach((p, i) => {
     Object.defineProperty(paramObject, i, {
         value: p,
@@ -26,6 +26,9 @@ Object.defineProperty(paramObject, i, {
 })
 return paramObject;
 }
+
+
+
 /*function useAnchors(anchorObj){
 const scrollRef=useRef();
 for(var anchor in anchorObj){
