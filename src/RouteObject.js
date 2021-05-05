@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from './routing';
 
 function constructParams(searchParams){
-    paramObject={};
+    const paramObject={};
     searchParams.forEach((p, i) => {
         Object.defineProperty(paramObject, i, {
             value: p,
@@ -18,8 +18,19 @@ class RouteObject{
        this.params=constructParams(this.urlObj.searchParams);
        this.pathVal=this.urlObj.pathname;
        this.pathNodes=this.urlObj.pathname.split("/");
+       
        this.pathNodes[this.pathNodes.length-1].replace(this.urlObj.search, '');
-        this.query=this.url.search;
+       
+       if(this.pathNodes[this.pathNodes.length-1]==""){
+      
+    this.pathNodes.pop();
+    }
+        if(this.pathNodes[0]==""){
+  
+           this.pathNodes.shift()
+        }
+  
+        this.query=this.urlObj.search;
         this.href=url;
         
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import RouteObject from './RouteObject';
 
-function useRoute(url){
+function useRoute(url=window.location.href){
     return new RouteObject(url);
 }
 
