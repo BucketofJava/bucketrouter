@@ -5,9 +5,19 @@ function useRoute(url=window.location.href){
     return new RouteObject(url);
 }
 
+function useParams(search=window.location.search){
+    const paramObject={};
+    const searchParams=new URLSearchParams(search);
+    searchParams.forEach((p, i) => {
+    Object.defineProperty(paramObject, i, {
+        value: p,
+        writable:false
+    })
+    })
+    return paramObject;
+}
 
-
-
+export default {useRoute, useParams};
 
 
 //OLD CODE:
