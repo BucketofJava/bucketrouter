@@ -17,7 +17,16 @@ function useParams(search=window.location.search){
     return paramObject;
 }
 
+
+function useResource(resourceIndex){
+
+}
+
+
+
+
 export default {useRoute, useParams};
+
 
 
 //OLD CODE:

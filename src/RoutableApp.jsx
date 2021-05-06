@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import RouteObject from './RouteObject';
 
 
 
-function getRouteResult(route, routeObj, index=0){
+function getRouteResult(route, routeObj, routeObjResources, index=0){
 
     const routeResultObj=new RouteObject(route);
    
@@ -28,6 +28,7 @@ function getRouteResult(route, routeObj, index=0){
     
         return routeObj[""];
     }
+    
    
     return routeObj.default;
 }
@@ -35,10 +36,22 @@ function getRouteResult(route, routeObj, index=0){
 const RoutableApp= props => {
 const [mainApp, setMainApp] = useState(null);
 
+function resourceListFunc(){
+    let allResources=[]
+    for(var routeNode in props.routeObj){
+        if(routeNode.startsWith(":")){
+            allResources.push(routeNode)
+        }
+    }
+}
 
+//Get an array of all resources, along with 
+const routeObjResources=useMemo(() => {
+ 
+}, [props])
 
 useEffect(() => {
-    setMainApp(getRouteResult(window.location.href, props.routeObj))
+    setMainApp(getRouteResult(window.location.href, props.routeObj, []))
 }, [props, window.location.pathname])
 
 
