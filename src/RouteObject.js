@@ -20,16 +20,17 @@ class RouteObject{
        this.pathNodes=this.urlObj.pathname.split("/");
        
        this.pathNodes[this.pathNodes.length-1].replace(this.urlObj.search, '');
+       console.log(this.pathNodes)
        
-       if(this.pathNodes[this.pathNodes.length-1]==""){
+       if(this.pathNodes[this.pathNodes.length-1]!=""){
       
-    this.pathNodes.pop();
+        this.pathNodes.push("")
     }
         if(this.pathNodes[0]==""){
   
            this.pathNodes.shift()
         }
-  
+        console.log(this.pathNodes)
         this.query=this.urlObj.search;
         this.href=url;
         

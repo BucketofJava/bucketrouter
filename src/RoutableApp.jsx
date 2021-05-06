@@ -4,7 +4,9 @@ import RouteObject from './RouteObject';
 
 
 function getRouteResult(route, routeObj, index=0){
+
     const routeResultObj=new RouteObject(route);
+   
     let result=null;
     if(Object.getOwnPropertyNames(routeObj).includes(routeResultObj.getPathNodes()[index])){
         if(typeof routeObj[routeResultObj.getPathNodes()[index]] == "object"){
@@ -13,16 +15,20 @@ function getRouteResult(route, routeObj, index=0){
             
         }
         if(typeof routeObj[routeResultObj.getPathNodes()[index]] == "function"){
-         
+          
             result=routeObj[routeResultObj.getPathNodes()[index]]();
             
         }
+       
+        
         return result;
+
     }
-    if(routeResultObj.getPathNodes().length==0){
-        return routeObj.home;
+    if(routeResultObj.getPathNodes() == [""]){
+    
+        return routeObj[""];
     }
-    console.log(routeResultObj.getPathNodes());
+   
     return routeObj.default;
 }
 
@@ -36,6 +42,15 @@ useEffect(() => {
 }, [props, window.location.pathname])
 
 
+
+
+    return (
+        <main>
+            {mainApp}
+        </main>   
+    );    }
+
+export default RoutableApp;
 //OLDER CODE:
 /*
 function checkRoute(){
@@ -52,11 +67,3 @@ useEffect(() => {
 setMainApp(checkRoute());
 }, [props, window.location.href])
 */
-
-    return (
-        <main>
-            {mainApp}
-        </main>   
-    );    }
-
-export default RoutableApp;
