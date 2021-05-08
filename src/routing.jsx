@@ -1,30 +1,39 @@
+//Imports
 import React from 'react';
 import RouteObject from './RouteObject';
 
+
+//Gets the RouteObject for a given url, default the current url
 function useRoute(url=window.location.href){
+    //Returns the RouteObject
     return new RouteObject(url);
 }
 
+//Gets the params for a given query, default the current query
 function useParams(search=window.location.search){
+    //Declaring an empty object to return
     const paramObject={};
+    //Instantiates a URLSearchParams object from the given query
     const searchParams=new URLSearchParams(search);
+    //Constructs an object from the searchParams
     searchParams.forEach((p, i) => {
     Object.defineProperty(paramObject, i, {
         value: p,
         writable:false
     })
     })
+    //Returns the final value of paramObject
     return paramObject;
 }
 
-
+//Gets a resource given the index
 function useResource(resourceIndex){
 
 }
 
 
 
-
+//Exports the hooks
 export default {useRoute, useParams};
 
 

@@ -1,6 +1,8 @@
+//Imports
 import React from 'react';
 import { useParams } from './routing';
 
+//Constructs an object with the given parameters keys and values
 function constructParams(searchParams){
     const paramObject={};
     searchParams.forEach((p, i) => {
@@ -13,15 +15,18 @@ function constructParams(searchParams){
 }
 
 class RouteObject{
+    //Constructor
     constructor(url){
+        //Declares values of the object
        this.urlObj=new URL(url);
        this.params=constructParams(this.urlObj.searchParams);
        this.pathVal=this.urlObj.pathname;
        this.pathNodes=this.urlObj.pathname.split("/");
-       
+       this.query=this.urlObj.search;
+        this.href=url;
+        //Removes query from path nodes
        this.pathNodes[this.pathNodes.length-1].replace(this.urlObj.search, '');
-       console.log(this.pathNodes)
-       
+       //Removes empty strings from path nodes
        if(this.pathNodes[this.pathNodes.length-1]!=""){
       
         this.pathNodes.push("")
@@ -30,11 +35,10 @@ class RouteObject{
   
            this.pathNodes.shift()
         }
-        console.log(this.pathNodes)
-        this.query=this.urlObj.search;
-        this.href=url;
+
         
     }
+    //Getter methods
     getParams(){
         return this.params;
     }
@@ -52,5 +56,5 @@ class RouteObject{
     }
 }
 
-
+//Exporting the object
 export default RouteObject;
