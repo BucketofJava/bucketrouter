@@ -28,6 +28,7 @@ function getRouteResult(route, routeObj, routeObjResources, index=0){
     
         return routeObj[""];
     }
+
     
    
     return routeObj.default;
@@ -36,22 +37,27 @@ function getRouteResult(route, routeObj, routeObjResources, index=0){
 const RoutableApp= props => {
 const [mainApp, setMainApp] = useState(null);
 
-function resourceListFunc(){
-    let allResources=[]
-    for(var routeNode in props.routeObj){
+function resourceListFunc(routeObj, originalPath=[], allResources=[]){
+ 
+    for(var routeNode in routeObj){
+        let newOriginalPath=originalPath.concat([routeNode])
         if(routeNode.startsWith(":")){
-            allResources.push(routeNode)
+            allResources.push(originalPath)
+            newOriginalPath.pop()
+        }
+        if(typeof routeObj[routeNode] == "object"){
+            resourceListFunc(routeObj, newOriginalPath, allResources)
         }
     }
+    return allResources;
 }
 
-//Get an array of all resources, along with 
 const routeObjResources=useMemo(() => {
- 
+ return resourceListFunc(props.routeObj);
 }, [props])
 
 useEffect(() => {
-    setMainApp(getRouteResult(window.location.href, props.routeObj, []))
+    setMainApp(getRouteResult(window.location.href, props.routeObj, routeObjResources))
 }, [props, window.location.pathname])
 
 
