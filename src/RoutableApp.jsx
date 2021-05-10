@@ -35,7 +35,8 @@ function getRouteResult(route, routeObj, routeObjResources, index=0){
     }
     //Checks if the node is a resource
     if(routeResultObj.getPathNodes().splice(index) in routeObjResources){
-        
+        //If so go to the next iteration of the function using the placeholder for the resource
+        return getRouteResult(routeResultObj.getURL().replace(routeResultObj.getPathNodes()[index], routeObjResources[routeResultObj.getPathNodes().splice(index)]), routeObj, routeObjResources, index);
     }
     
    //Returns the 404/Page Not Found page
@@ -68,13 +69,13 @@ function resourceListFunc(routeObj, originalPath=[], allResources={}){
     //Exit the function
     return allResources;
 }
-//A memoized value containing a dictionary of all the resources and the path to them
+//A memoized value containing a dictionary of all the resources and the path to them, chagnes if the route dictionary changes
 const routeObjResources=useMemo(() => {
  return resourceListFunc(props.routeObj);
 }, [props])
 
 
-//Everytime the path or the routeObj changes, sets the Main App to the result of the route
+//Everytime the path or the route dictionary changes, sets the Main App to the result of the route
 useEffect(() => {
     setMainApp(getRouteResult(window.location.href, props.routeObj, routeObjResources))
 }, [props, window.location.pathname])
