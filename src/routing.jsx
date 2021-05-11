@@ -34,7 +34,7 @@ function useResource(resourceIndex){
 
 
 //Exports the hooks
-export default {useRoute, useParams};
+export {useRoute, useParams};
 
 
 
