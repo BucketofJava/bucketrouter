@@ -1,5 +1,6 @@
 //Imports
-import React from 'react';
+import React, { useContext } from 'react';
+import { ResourceObj } from './RoutableApp';
 import RouteObject from './RouteObject';
 
 
@@ -27,14 +28,14 @@ function useParams(search=window.location.search){
 }
 
 //Gets a resource given the index
-function useResource(resourceIndex){
-
+function useResources(){
+return useContext(ResourceObj);
 }
 
 
 
 //Exports the hooks
-export {useRoute, useParams};
+export {useRoute, useParams, useResources};
 
 
 

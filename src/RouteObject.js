@@ -35,6 +35,7 @@ class RouteObject{
   
            this.pathNodes.shift()
         }
+        this.resourceObj={};
 
         
     }
@@ -54,6 +55,20 @@ class RouteObject{
     getURLObj(){
         return this.urlObj;
     }
+    getResourceObj(){
+        return this.resourceObj;
+    }
+    //Setter method
+    setResourceObj(resourceObj){
+        this.resourceObj=resourceObj;
+    }
+    addResource(id, value){
+        Object.defineProperty(this.resourceObj, id, {
+            value: value,
+            enumerable: true
+        });
+    }
+
 }
 
 //Exporting the object

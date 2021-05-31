@@ -8,7 +8,7 @@ function redirectTo(path){
 const Link= () => {
     
 return (
-    <div onClick={() => {redirectTo(props.path)}}>
+    <div onClick={() => {redirectTo(props.href)}}>
 
     </div>
 );
