@@ -29,7 +29,7 @@ function getRouteResult(route, routeObj, routeObjResources, index=0, routeObjIni
             console.log(routeResultObj.getPathNodes())
             console.log(index)
             console.log(routeResultObj.getPathNodes()[index])
-            if(routeResultObj.getPathNodes().length > index+2){ return React.cloneElement(routeObjInitial.default(), {resources});}
+            if(routeResultObj.getPathNodes().length > index+2){ return React.cloneElement(routeObjInitial["*"](), {resources});}
             //If so, set result to the value of the path node in the dictionary
             result=routeObj[routeResultObj.getPathNodes()[index]]();
             
@@ -59,11 +59,11 @@ function getRouteResult(route, routeObj, routeObjResources, index=0, routeObjIni
     
     const resources=routeResultObj.getResourceObj();
    //Returns the 404/Page Not Found page
-    return React.cloneElement(routeObjInitial.default(), {resources});
+    return React.cloneElement(routeObjInitial["*"](), {resources});
 }
 //Declares the app variable
 const RoutableApp= props => {
-const [mainApp, setMainApp] = useState(props.routeObj.default);
+const [mainApp, setMainApp] = useState(props.routeObj["*"]);
 const [resourceFinalObj, setResourceFinalObj] = useState({});
 
 
