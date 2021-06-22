@@ -4,7 +4,7 @@ import { arrayEquals, includesOther } from './ArrayUtil';
 import RouteObject from './RouteObject';
 
 //Creating the resource object context
-const ResourceObj = React.createContext();
+//const ResourceObj = React.createContext();
 //Gets the page needed from the route dictionary
 function getRouteResult(route, routeObj, routeObjResources, index=0, routeObjInitial=routeObj, routeResources={}){
     //Gets the RouteObject from the route provided
@@ -25,34 +25,41 @@ function getRouteResult(route, routeObj, routeObjResources, index=0, routeObjIni
         }
         //Checks if the value of the path node in the route dictionary is an object; If there are not further nodes to go down
         if(typeof routeObj[routeResultObj.getPathNodes()[index]] == "function"){
-            console.log(routeResultObj.getPathNodes()[index]+"cheesepuffs")
-            console.log(routeObj[routeResultObj.getPathNodes()[index]]())
+            const resources=routeResultObj.getResourceObj();
+            console.log(routeResultObj.getPathNodes())
+            console.log(index)
+            console.log(routeResultObj.getPathNodes()[index])
+            if(routeResultObj.getPathNodes().length > index+2){ return React.cloneElement(routeObjInitial.default(), {resources});}
             //If so, set result to the value of the path node in the dictionary
             result=routeObj[routeResultObj.getPathNodes()[index]]();
             
         }
+        const resources=routeResultObj.getResourceObj();
+
         //Exit the function
-        return [result, routeResultObj.getResourceObj()];
+        return React.cloneElement(result, {resources});
 
     }
 
     //Checks if the user is at the main page
     if(routeResultObj.getPathNodes() == [""]){
         //If so return the home page
-        return [routeObj[""], routeResultObj.getResourceObj()];
+        return routeObj[""];
     }
     //Checks if the current path nodes contain one of the resource path nodes
-    if(includesOther(Object.values(routeObjResources), routeResultObj.getPathNodes().slice(0, index))){
+    if(includesOther(Object.values(routeObjResources), routeResultObj.getPathNodes().slice(0, index))&&!routeResultObj.getPathNodes()[index].includes(":")){
         //Add the key/value pair to the routeResultobj resource object
         const singleKeyArray=Object.keys(routeObjResources).filter(k => (arrayEquals(routeObjResources[k], routeResultObj.getPathNodes().slice(0, index))));
-        routeResultObj.addResource(singleKeyArray[0], routeObjResources[singleKeyArray[0]]);
+        routeResultObj.addResource(singleKeyArray[0], routeResultObj.getPathNodes()[index]);
+        console.log(routeResultObj.getPathNodes().slice(0, index))
+        console.log(`${routeResultObj.getURL().replace(routeResultObj.getPath(), "")}/${routeResultObj.getPathNodes().slice(0, index).concat([`:${singleKeyArray[0]}`]).concat(routeResultObj.getPathNodes().slice(index+1, routeResultObj.getPathNodes().length-1)).join("/")}`)
         //Run the function again, this time using the : value in the path and with the new routeResultObj thing
-        return [getRouteResult(`${routeResultObj.getURL().replace(routeResultObj.getPath(), "")}/${routeResultObj.getPathNodes().slice(0, index).concat([`:${singleKeyArray[0]}`]).join("/")}`, routeObj, routeObjResources, index, routeObjInitial, routeResultObj.getResourceObj()), routeResultObj.getResourceObj()]
+        return getRouteResult(`${routeResultObj.getURL().replace(routeResultObj.getPath(), "")}/${routeResultObj.getPathNodes().slice(0, index).concat([`:${singleKeyArray[0]}`]).concat(routeResultObj.getPathNodes().slice(index+1, routeResultObj.getPathNodes().length-1)).join("/")}`, routeObj, routeObjResources, index, routeObjInitial, routeResultObj.getResourceObj())
     }
     
-    console.log("cactuspuffs"+routeResultObj.getPathNodes()[index])
+    const resources=routeResultObj.getResourceObj();
    //Returns the 404/Page Not Found page
-    return [routeObjInitial.default, routeResultObj.getResourceObj()];
+    return React.cloneElement(routeObjInitial.default(), {resources});
 }
 //Declares the app variable
 const RoutableApp= props => {
@@ -84,6 +91,7 @@ if(typeof routeObj[key]=="object"){
 
 
 }
+console.log(resourceObj)
 return resourceObj;
 }
 //A memoized value containing a dictionary of all the resources and the path to them, chagnes if the route dictionary changes
@@ -95,8 +103,9 @@ const routeObjResources=useMemo(() => {
 //Everytime the path or the route dictionary changes, sets the Main App to the result of the route
 useEffect(() => {
     const routeResult=getRouteResult(window.location.href, props.routeObj, routeObjResources);
-    setMainApp(routeResult[0])
-    setResourceFinalObj(routeResult[1])
+    setMainApp(routeResult)
+    console.log(routeResult)
+   // setResourceFinalObj(routeResult[1])
  
 }, [props, window.location.pathname], routeObjResources)
 
@@ -104,16 +113,18 @@ useEffect(() => {
 
 //Returns the page
     return (
-        <ResourceObj.Provider value={resourceFinalObj}>
+      
         <main>
+
             {mainApp}
+
             </main>
-        </ResourceObj.Provider>
+    
     );    }
 
 //Exports the component
 export default RoutableApp;
-export { ResourceObj };
+//export { ResourceObj };
 //OLDER CODE:
 /*
 function checkRoute(){
